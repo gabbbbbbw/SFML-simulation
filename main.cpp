@@ -36,9 +36,9 @@ void handlefloorcollision(
     const float floortop = floorbounds.position.y;
 
     const bool isabovefloor = ballbounds.position.y < floortop;
-    const bool reachedfloor = ballbottom >= floortop;
+    const bool reachedfloor = ballbottom >= floortop -0.1f;
 
-    if (isabovefloor && reachedfloor && velocity.y > 0.f) {
+    if (isabovefloor && reachedfloor && velocity.y >= 0.f) {
         ball.move({ 0.f,floortop - ballbottom });
         velocity.y = -velocity.y * restitution;
 
@@ -65,7 +65,7 @@ int main()
     const float ballRadius{ 25.f };
 
     const float gravity{ 800.f };
-    const float restituition{ 0.75f };
+    const float restitution{ 0.75f };
     const float restingspeed{ 20.f };
 
     sf::RenderWindow window(
@@ -108,7 +108,7 @@ int main()
 
         updateposition(ball, velocity, deltaTime);
 
-        handlefloorcollision(ball, floor, velocity, restituition,restingspeed,isgrounded);
+        handlefloorcollision(ball, floor, velocity, restitution,restingspeed,isgrounded);
         
         window.clear(sf::Color::Black);
         window.draw(ball);
