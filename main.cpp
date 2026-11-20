@@ -58,6 +58,18 @@ void handlefloorcollision(
     
 }
 
+void resetsimulation(
+    sf::CircleShape& ball,
+    sf::Vector2f& velocity,
+    bool& isgrounded,
+    const float windowwidth,
+    const float windowheight)
+{
+    ball.setPosition({ windowwidth / 2,windowheight / 5 });
+    velocity = { 0.f,0.f };
+    isgrounded = false;
+}
+
 int main()
 {
     const float windowWidth{ 400.f };
@@ -90,6 +102,7 @@ int main()
 
     sf::Vector2f velocity{ 0.f,0.f };
     bool isgrounded{ false };
+    bool ispaused{ false };
 
     sf::Clock clock;
 
@@ -103,12 +116,33 @@ int main()
             {
                 window.close();
             }
+            if (const auto* keypressed =
+                event->getIf<sf::Event::KeyPressed>())
+            {
+                if (keypressed->code == sf::Keyboard::Key::Space)
+                {
+                    ispaused = !ispaused;
+                }
+
+                if (keypressed->code == sf::Keyboard::Key::R)
+                {
+                    resetsimulation(
+                        ball,
+                        velocity,
+                        isgrounded,
+                        windowWidth,
+                        windowHeight
+                    );
+                }
+            }
         }
-        applygravity(velocity, gravity, deltaTime, isgrounded);
+        if (!ispaused) {
+            applygravity(velocity, gravity, deltaTime, isgrounded);
 
-        updateposition(ball, velocity, deltaTime);
+            updateposition(ball, velocity, deltaTime);
 
-        handlefloorcollision(ball, floor, velocity, restitution,restingspeed,isgrounded);
+            handlefloorcollision(ball, floor, velocity, restitution, restingspeed, isgrounded);
+        }
         
         window.clear(sf::Color::Black);
         window.draw(ball);
