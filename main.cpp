@@ -25,7 +25,9 @@ void handlefloorcollision(
     sf::CircleShape& ball,
     const sf::RectangleShape& floor,
     sf::Vector2f& velocity,
-    const float restitution)
+    const float restitution,
+    const float restingspeed,
+    bool& isgrounded)
 {
     const sf::FloatRect ballbounds = ball.getGlobalBounds();
     const sf::FloatRect floorbounds = floor.getGlobalBounds();
@@ -39,6 +41,19 @@ void handlefloorcollision(
     if (isabovefloor && reachedfloor && velocity.y > 0.f) {
         ball.move({ 0.f,floortop - ballbottom });
         velocity.y = -velocity.y * restitution;
+
+        if (std::abs(velocity.y) < restingspeed) {
+
+            velocity.y = 0.f;
+            isgrounded = true;
+
+        }
+        else {
+            isgrounded = false;
+        }
+    }
+    else {
+        isgrounded = false;
     }
     
 }
@@ -51,6 +66,7 @@ int main()
 
     const float gravity{ 800.f };
     const float restituition{ 0.75f };
+    const float restingspeed{ 20.f };
 
     sf::RenderWindow window(
         sf::VideoMode({ 400u, 400u }),
@@ -92,7 +108,7 @@ int main()
 
         updateposition(ball, velocity, deltaTime);
 
-        handlefloorcollision(ball, floor, velocity, restituition);
+        handlefloorcollision(ball, floor, velocity, restituition,restingspeed,isgrounded);
         
         window.clear(sf::Color::Black);
         window.draw(ball);
