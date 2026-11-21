@@ -79,6 +79,7 @@ int main()
     const float gravity{ 800.f };
     const float restitution{ 0.75f };
     const float restingspeed{ 20.f };
+    const float maximumDeltaTime{ 0.05f };
 
     sf::RenderWindow window(
         sf::VideoMode({ 400u, 400u }),
@@ -108,7 +109,9 @@ int main()
 
     while (window.isOpen())
     {
-        const float deltaTime = clock.restart().asSeconds();
+        float deltaTime = clock.restart().asSeconds();
+
+        deltaTime = std::min(deltaTime,maximumDeltaTime);
 
         while (const std::optional event = window.pollEvent())
         {
