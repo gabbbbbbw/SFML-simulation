@@ -4,13 +4,13 @@ A 2D physics simulation built in C++ using SFML. The project models a ball falli
 
 ##Features
 
--Frame rate independent movement using delta time
--Gravity based acceleration
--Floor collisions using globalbounds()
--Overlap correction to prevent ball from falling through the floor
--Restitution to simulate energy loss after each bounce
--Resting speed threshold to prevent repeated tiny bounces
--Space to pause, R to reset ball
+- Frame rate independent movement using delta time
+- Gravity based acceleration
+- Floor collisions using globalbounds()
+- Overlap correction to prevent ball from falling through the floor
+- Restitution to simulate energy loss after each bounce
+- Resting speed threshold to prevent repeated tiny bounces
+- Space to pause, R to reset ball
 
 ##Controls
 
@@ -29,9 +29,9 @@ R key for Resetting simulation
 
 #How to Run
 
-1.Open the solution in Visual Studio.
-2.Ensure SFML is configured for the project.
-3.Build and run the program.
+1. Open the solution in Visual Studio.
+2. Ensure SFML is configured for the project.
+3. Build and run the program.
 
 
 
